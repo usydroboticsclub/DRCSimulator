@@ -33,6 +33,9 @@ pip3 install websockets
 ### A few more pointers
 - You can find USYD's successful 2019 entry here: https://github.com/clucini/SelfZoomingCar. It's not particularly well documented, but there may be some lessons to be learnt in terms of modular architecture. (May.)
 
+### PEP hours
+If you would like to claim PEP hours for this activity, please email us with some proof of work (a link to your repository or a video); and we'll be happy to back up your PEP claim and perhaps get it fast-tracked.
+
 ### Some caveats
 This simulator is not designed to be competition-grade. You can mess around with the parameters a lot; you can make the car very very fast or make it fly by editing the source code as you want. So, um, enjoy? Just don't push it to prod.
 
