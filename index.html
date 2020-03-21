@@ -173,7 +173,7 @@
 				physicsWorld.setGravity( new Ammo.btVector3( 0, -9.82, 0 ) );
 			}
 
-			let tickerCountDown = 100;
+			let tickerCountDown = 0;
 			function tick() {
 				requestAnimationFrame( tick );
 				tickerCountDown--;
@@ -439,15 +439,15 @@
 			}
 
 			function createObjects() {
-
+				let arena_size = 150
 				//the floor
-				createBox(new THREE.Vector3(0, -0.5, 0), ZERO_QUATERNION, 75, 1, 75, 0, 2,true);
+				createBox(new THREE.Vector3(0, -0.5, 0), ZERO_QUATERNION, arena_size, 1, arena_size, 0, 2,true);
 
 				//the bounding walls
 				var quaternion = new THREE.Quaternion(0, 0, 0, 1);
 				for (let i=0;i<4;i++){
 					quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0), (i+1)*-Math.PI / 2)
-					createBox(new THREE.Vector3(37.5*(Math.floor(i/2)*2-1)*((i+1)%2), 2.5, 37.5*(Math.floor(i/2)*2-1)*((i)%2)), quaternion, 75, 5, 5, 0, 2);
+					createBox(new THREE.Vector3(arena_size/2*(Math.floor(i/2)*2-1)*((i+1)%2), 2.5, arena_size/2*(Math.floor(i/2)*2-1)*((i)%2)), quaternion, arena_size, 5, 5, 0, 2);
 				}
 				//todo: add floor map to the floor
 
@@ -455,7 +455,7 @@
 
 				//todo: multiple cars?
 
-				vehicleHandler = createVehicle(new THREE.Vector3(0, 4, -20), ZERO_QUATERNION);
+				vehicleHandler = createVehicle(new THREE.Vector3(0, 2, -arena_size/2+20), new THREE.Quaternion(0,1,0,Math.PI/2));
 			}
 
 			// - Init -
