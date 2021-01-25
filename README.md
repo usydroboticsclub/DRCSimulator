@@ -32,6 +32,7 @@ pip3 install websockets
 ### A few more pointers
 - You can find USYD's successful 2019 entry here: https://github.com/clucini/SelfZoomingCar. It's not particularly well documented, but there may be some lessons to be learnt in terms of modular architecture. (May.)
 - You can also try to drive the car yourself using the WSAD keys at `http://localhost:8000/index_keydrive.html`
+- If the code is running way too slowly, you can try Josiah Tan's Processing version here: https://github.com/Josiah-tan/DRCsimulator_test
 
 ### PEP hours
 If you would like to claim PEP hours for this activity, please email us with some proof of work (a link to your repository or a video); and we'll be happy to back up your PEP claim and perhaps get it fast-tracked.
