@@ -92,7 +92,7 @@
 
                 camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 2000);
                 camera.position.x = -4.84;
-                camera.position.y = 4.39;
+                camera.position.y = 200.39;
                 camera.position.z = -35.11;
                 camera.lookAt(new THREE.Vector3(0.33, -0.40, 0.85));
                 controls = new THREE.OrbitControls(camera);
@@ -222,12 +222,10 @@
                 carRenderer.render(scene, carCamera);
 
                 tickerCountDown--;
-                console.log(tickerCountDown);
                 if (tickerCountDown > 0) return;
                 tickerCountDown = 100;
                 var gl = carRenderer.getContext();
                 gl.readPixels(0, 0, 640, 480, gl.RGBA, gl.UNSIGNED_BYTE, phatbuffer);
-                console.log(phatbuffer[231]);
                 //websocket stuff
                 if (ws.readyState == WebSocket.OPEN) {
                     ws.send(phatbuffer.buffer);
@@ -427,6 +425,16 @@
                 // Sync keybord actions and physics and graphics
                 this.sync = (dt) => {
 
+                    if (actions['acceleration']) this.engineForce = 100;
+                    else if (actions['braking']) this.engineForce = -100;
+                    else if (ws.readyState != WebSocket.OPEN) {
+                        this.engineForce = 0
+                    }
+                    if (actions['left']) this.vehicleSteering = -10;
+                    else if (actions['right']) this.vehicleSteering = 10;
+                    else if (ws.readyState != WebSocket.OPEN) {
+                        this.vehicleSteering = 0
+                    }
                     vehicle.applyEngineForce(this.engineForce, BACK_LEFT);
                     vehicle.applyEngineForce(this.engineForce, BACK_RIGHT);
 
