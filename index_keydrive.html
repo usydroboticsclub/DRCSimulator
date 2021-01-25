@@ -73,6 +73,15 @@
             var maxNumObjects = 30;
             var carChassis;
 
+            // Keybord actions
+            var actions = {};
+            var keysActions = {
+                "KeyW": 'acceleration',
+                "KeyS": 'braking',
+                "KeyA": 'left',
+                "KeyD": 'right'
+            };
+
             // - Functions -
 
             function initGraphics() {
@@ -137,6 +146,8 @@
                 carRenderTarget = new THREE.WebGLRenderTarget(640, 480);
 
                 window.addEventListener('resize', onWindowResize, false);
+                window.addEventListener('keydown', keydown);
+                window.addEventListener('keyup', keyup);
             }
 
             function onWindowResize() {
@@ -222,6 +233,24 @@
                     restartWS();
                 }
                 return;
+            }
+
+            function keyup(e) {
+                if (keysActions[e.code]) {
+                    actions[keysActions[e.code]] = false;
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+            }
+
+            function keydown(e) {
+                if (keysActions[e.code]) {
+                    actions[keysActions[e.code]] = true;
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
             }
 
             function createBoxObject(obj) {
@@ -395,6 +424,17 @@
 
                 // Sync keybord actions and physics and graphics
                 this.sync = (dt) => {
+
+                    if (actions['acceleration']) this.engineForce = 100;
+                    else if (actions['braking']) this.engineForce = -100;
+                    else if (ws.readyState != WebSocket.OPEN) {
+                        this.engineForce = 0
+                    }
+                    if (actions['left']) this.vehicleSteering = -10;
+                    else if (actions['right']) this.vehicleSteering = 10;
+                    else if (ws.readyState != WebSocket.OPEN) {
+                        this.vehicleSteering = 0
+                    }
                     vehicle.applyEngineForce(this.engineForce, BACK_LEFT);
                     vehicle.applyEngineForce(this.engineForce, BACK_RIGHT);
 
